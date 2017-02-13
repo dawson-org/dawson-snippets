@@ -4,7 +4,7 @@ dynamodb-backup
 
 Backups items in DynamoDB in real time to an S3 Bucket with Versioning enabled. You can use this to have real-time snapshots of one or more of your DynamoBB tables. 
 
-![](https://nodei.co/npm/ender.png?mini=true)
+![](https://nodei.co/npm/dawson-snippets.png?mini=true)
 
 ```js
 import createBackupTrigger from 'dawson-snippets/dynamodb-backup';
