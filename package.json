@@ -1,0 +1,15 @@
+{
+  "name": "dawson-snippets",
+  "version": "0.0.1",
+  "description": "Snippets for CloudFormation templates",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dawson-org/dawson-snippets.git"
+  },
+  "author": "Simone Lusenti <simone@plasticpanda.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dawson-org/dawson-snippets/issues"
+  },
+  "homepage": "https://github.com/dawson-org/dawson-snippets#readme"
+}
