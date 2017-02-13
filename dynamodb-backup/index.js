@@ -2,53 +2,51 @@ const lambdaNameTemplate = tableLogicalName =>
   `DynamoDBSnapshot${tableLogicalName}`;
 
 const lambdaRoleTemplate = (tableLogicalName, bucketLogicalName) => ({
-  [`${lambdaNameTemplate(tableLogicalName)}Role`]: {
-    Type: 'AWS::IAM::Role',
-    Properties: {
-      AssumeRolePolicyDocument: {
-        Version: '2012-10-17',
-        Statement: [
-          {
-            Effect: 'Allow',
-            Principal: {
-              Service: ['lambda.amazonaws.com']
-            },
-            Action: ['sts:AssumeRole']
-          }
-        ]
-      },
-      Path: '/',
-      Policies: [
+  Type: 'AWS::IAM::Role',
+  Properties: {
+    AssumeRolePolicyDocument: {
+      Version: '2012-10-17',
+      Statement: [
         {
-          PolicyName: 'dawson-backup-trigger',
-          PolicyDocument: {
-            Version: '2012-10-17',
-            Statement: [
-              {
-                Effect: 'Allow',
-                Action: ['s3:PutObject'],
-                Resource: [
-                  { 'Fn::Sub': `arn:aws:s3:::\${${bucketLogicalName}}/*` }
-                ]
-              },
-              {
-                Effect: 'Allow',
-                Action: [
-                  'dynamodb:DescribeStream',
-                  'dynamodb:GetRecords',
-                  'dynamodb:GetShardIterator',
-                  'dynamodb:ListStreams',
-                  'logs:CreateLogGroup',
-                  'logs:CreateLogStream',
-                  'logs:PutLogEvents'
-                ],
-                Resource: '*' // @TODO dynamodb Stream Arn here
-              }
-            ]
-          }
+          Effect: 'Allow',
+          Principal: {
+            Service: ['lambda.amazonaws.com']
+          },
+          Action: ['sts:AssumeRole']
         }
       ]
-    }
+    },
+    Path: '/',
+    Policies: [
+      {
+        PolicyName: 'dawson-backup-trigger',
+        PolicyDocument: {
+          Version: '2012-10-17',
+          Statement: [
+            {
+              Effect: 'Allow',
+              Action: ['s3:PutObject'],
+              Resource: [
+                { 'Fn::Sub': `arn:aws:s3:::\${${bucketLogicalName}}/*` }
+              ]
+            },
+            {
+              Effect: 'Allow',
+              Action: [
+                'dynamodb:DescribeStream',
+                'dynamodb:GetRecords',
+                'dynamodb:GetShardIterator',
+                'dynamodb:ListStreams',
+                'logs:CreateLogGroup',
+                'logs:CreateLogStream',
+                'logs:PutLogEvents'
+              ],
+              Resource: '*' // @TODO dynamodb Stream Arn here
+            }
+          ]
+        }
+      }
+    ]
   }
 });
 
@@ -67,7 +65,7 @@ module.exports = function createDynamodbBackupTrigger (
         StartingPosition: 'TRIM_HORIZON'
       }
     },
-    ...lambdaRoleTemplate(tableLogicalName, bucketLogicalName),
+    [`${lambdaNameTemplate(tableLogicalName)}Role`]: lambdaRoleTemplate(tableLogicalName, bucketLogicalName),
     [lambdaName]: {
       Type: 'AWS::Lambda::Function',
       Properties: {
