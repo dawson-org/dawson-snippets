@@ -2,7 +2,7 @@
 dynamodb-backup
 ===============
 
-## Example Usage
+Backups items in DynamoDB in real time to an S3 Bucket with Versioning enabled. You can use this to have real-time snapshots of one or more of your DynamoBB tables. 
 
 ![](https://nodei.co/npm/ender.png?mini=true)
 
@@ -10,13 +10,9 @@ dynamodb-backup
 import createBackupTrigger from 'dawson-snippets/dynamodb-backup';
 import merge from 'lodash/merge';
 
-const bucketBackups = {
-  DynamoBackupsBucket: {
-    Type: 'AWS::S3::Bucket',
-    Properties: {}
-  }
-};
-
+// an _example_ DynamoDB Table,
+// make sure to include the StreamSpecification attribute
+// otherwise you get a CloudFormation error: "Attribute: StreamArn was not found for resource: XXX"
 const tableUsers = {
   TableUsers: {
     Type: 'AWS::DynamoDB::Table',
@@ -36,6 +32,21 @@ const tableUsers = {
   }
 };
 
+// an S3 Bucket that's used to store item snapshots,
+// it's suggested to enable Versioning, as below:
+const bucketBackups = {
+  DynamoBackupsBucket: {
+    Type: 'AWS::S3::Bucket',
+    Properties: {
+      VersioningConfiguration: {
+        Status: 'Enabled'
+      }
+    }
+  }
+};
+
+// this function will return the appropriate Resources
+// including Lambda::Function, IAM::Role and Lambda::EventSourceMapping
 const backupResources = createDynamodbBackupTrigger({
   tableLogicalName: 'TableUsers',
   bucketLogicalName: 'DynamoBackupsBucket'
