@@ -110,6 +110,7 @@ export default function createDynamodbBackupTrigger (
               }))
               .then(() => {
                 console.log('All done with', records.length, 'records');
+                callback();
               })
               .catch(err => {
                 console.error('Error', err);
