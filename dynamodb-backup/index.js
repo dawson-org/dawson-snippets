@@ -52,7 +52,7 @@ const lambdaRoleTemplate = (tableLogicalName, bucketLogicalName) => ({
   }
 });
 
-export default function createDynamodbBackupTrigger (
+module.exports = function createDynamodbBackupTrigger (
   { tableLogicalName, bucketLogicalName }
 ) {
   const streamArn = { 'Fn::GetAtt': [tableLogicalName, 'StreamArn'] };
