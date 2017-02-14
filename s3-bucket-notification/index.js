@@ -13,7 +13,7 @@ module.exports = params => {
   if (filterRules && filterRules.length > 0) {
     lambdaConfiguration.Filter = {
       S3Key: {
-        Rules: [filterRules]
+        Rules: filterRules
       }
     };
   }
@@ -28,7 +28,7 @@ module.exports = params => {
       },
       DeletionPolicy: 'Retain'
     },
-    [makePermissionLogicalName]: {
+    [makePermissionLogicalName(bucketLogicalName)]: {
       Type: 'AWS::Lambda::Permission',
       Properties: {
         Action: 'lambda:invokeFunction',

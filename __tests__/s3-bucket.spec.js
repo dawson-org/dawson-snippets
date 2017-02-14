@@ -4,7 +4,7 @@ const merge = require('lodash/merge');
 
 const s3BucketCors = require('../s3-bucket-cors');
 const s3BucketNotification = require('../s3-bucket-notification');
-const s3BucketPublicRead = require('../s3-bucket-policy');
+const s3BucketPublicRead = require('../s3-bucket-public-read');
 
 /* s3BucketCors */
 const USER_BUCKET = {
@@ -163,7 +163,7 @@ const COMPANY_SHOWCASE = {
                   Rules: [
                     {
                       Name: 'suffix',
-                      Value: 'latest/data.json'
+                      Value: 'foo/*'
                     }
                   ]
                 }

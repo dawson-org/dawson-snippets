@@ -9,7 +9,7 @@ module.exports = params => {
       Properties: {},
       DeletionPolicy: 'Retain'
     },
-    [makePolicyLogicalName]: {
+    [makePolicyLogicalName(bucketLogicalName)]: {
       Type: 'AWS::S3::BucketPolicy',
       Properties: {
         Bucket: { Ref: bucketLogicalName },

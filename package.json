@@ -11,5 +11,11 @@
   "bugs": {
     "url": "https://github.com/dawson-org/dawson-snippets/issues"
   },
-  "homepage": "https://github.com/dawson-org/dawson-snippets#readme"
+  "homepage": "https://github.com/dawson-org/dawson-snippets#readme",
+  "devDependencies": {
+    "ava": "^0.18.1"
+  },
+  "engines": {
+    "node": "4.3"
+  }
 }
