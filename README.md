@@ -4,6 +4,7 @@
 [dawson](https://github.com/dawson-org/dawson-cli)-ready CloudFormation Template Snippets.
 Snippets are an easy way to add custom resources to a [dawson](https://github.com/dawson-org/dawson-cli) application.
 
+[![npm version](https://badge.fury.io/js/dawson-snippets.svg)](https://badge.fury.io/js/dawson-snippets)
 [![Build Status](https://travis-ci.org/dawson-org/dawson-snippets.svg?branch=master)](https://travis-ci.org/dawson-org/dawson-snippets)
 
 
