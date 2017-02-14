@@ -29,8 +29,8 @@ export function processCFTemplate(template) {
 ```
 
 *CloudFormation's Physical Resource Id:* `{ Ref: '<tableLogicalName>' }`  
-*AWS Table ARN:* ```{ 'Fn::Sub': `arn:aws:dynamodb:\${AWS::Region}:\${AWS::AccountId}:table/\${<bucketLogicalName>}` }```
-*AWS Stream ARN:* ```{ 'Fn::Sub': `\${<bucketLogicalName>.StreamArn}` }```
+*AWS DynamoDB Table ARN:* ```{ 'Fn::Sub': `arn:aws:dynamodb:\${AWS::Region}:\${AWS::AccountId}:table/\${<bucketLogicalName>}` }```  
+*AWS DynamoDB Stream ARN:* ```{ 'Fn::Sub': `\${<bucketLogicalName>.StreamArn}` }```
 
 ## Details
 
