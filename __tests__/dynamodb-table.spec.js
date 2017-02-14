@@ -34,22 +34,22 @@ const simpleTable = {
 };
 
 test('simpleTable', t => {
-  t.deepEqual({
-    Resources: dynamoDBTable({
-      tableLogicalName: 'TableBar',
-      primaryKeyName: 'BarId',
-      enableStream: false
-    }),
-    Outputs: {
-      TableBar: {
-        Value: { Ref: 'TableBar' }
+  t.deepEqual(
+    {
+      Resources: dynamoDBTable({
+        tableLogicalName: 'TableBar',
+        primaryKeyName: 'BarId',
+        enableStream: false
+      }),
+      Outputs: {
+        TableBar: {
+          Value: { Ref: 'TableBar' }
+        }
       }
-    }
-  },
-  simpleTable
+    },
+    simpleTable
   );
 });
-
 
 const usersTable = merge(
   {
@@ -145,14 +145,15 @@ const usersTableResources = mergeWith(
 );
 
 test('usersTable', t => {
-  t.deepEqual({
-    Resources: usersTableResources,
-    Outputs: {
-      TableUsers: {
-        Value: { Ref: 'TableUsers' }
+  t.deepEqual(
+    {
+      Resources: usersTableResources,
+      Outputs: {
+        TableUsers: {
+          Value: { Ref: 'TableUsers' }
+        }
       }
-    }
-  },
-  usersTable
+    },
+    usersTable
   );
 });

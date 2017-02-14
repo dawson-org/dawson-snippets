@@ -2,19 +2,23 @@ module.exports = params => {
   const tableLogicalName = params.tableLogicalName;
   const gsiKeyName = params.gsiKeyName;
   const projectedAttributes = params.projectedAttributes || [];
-  const attributeDefinitions = [{
-    AttributeName: gsiKeyName,
-    AttributeType: 'S'
-  }];
-  const globalSecondaryIndexes = [{
-    IndexName: `${gsiKeyName.toLowerCase()}-global-index`,
-    KeySchema: [{ AttributeName: gsiKeyName, KeyType: 'HASH' }],
-    Projection: 'ALL',
-    ProvisionedThroughput: {
-      ReadCapacityUnits: '1',
-      WriteCapacityUnits: '1'
+  const attributeDefinitions = [
+    {
+      AttributeName: gsiKeyName,
+      AttributeType: 'S'
     }
-  }];
+  ];
+  const globalSecondaryIndexes = [
+    {
+      IndexName: `${gsiKeyName.toLowerCase()}-global-index`,
+      KeySchema: [{ AttributeName: gsiKeyName, KeyType: 'HASH' }],
+      Projection: 'ALL',
+      ProvisionedThroughput: {
+        ReadCapacityUnits: '1',
+        WriteCapacityUnits: '1'
+      }
+    }
+  ];
   if (projectedAttributes && projectedAttributes.length > 0) {
     globalSecondaryIndexes[0].Projection = {
       NonKeyAttributes: projectedAttributes,
