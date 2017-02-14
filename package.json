@@ -6,6 +6,9 @@
     "type": "git",
     "url": "git+https://github.com/dawson-org/dawson-snippets.git"
   },
+  "scripts": {
+    "test": "ava"
+  },
   "author": "Simone Lusenti <simone@plasticpanda.com>",
   "license": "MIT",
   "bugs": {
