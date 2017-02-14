@@ -1,66 +1,60 @@
 
 dynamodb-backup
-===============
+===
 
-Backups items in DynamoDB in real-time to an S3 Bucket with versioning enabled. You can use this to have real-time snapshots of one or more of your DynamoDB tables. 
+Creates a Lambda Function which backups items written to DynamoDB in real-time to an S3 Bucket with Versioning enabled. You can use this to have real-time snapshots for one of your DynamoDB Tables. 
+
+You can include this snippet multiple times provided that you specify different Tables.
 
 ![](https://nodei.co/npm/dawson-snippets.png?mini=true)
 
+## Usage
 ```js
 import createBackupTrigger from 'dawson-snippets/dynamodb-backup';
+import dynamoDBTable from 'dawson-snippets/dynamodb-table';
+import s3BucketVersioning from 'dawson-snippets/s3-bucket-versioning';
 import merge from 'lodash/merge';
 
 // an _example_ DynamoDB Table,
 // make sure to include the StreamSpecification attribute
 // otherwise you get a CloudFormation error: "Attribute: StreamArn was not found for resource: XXX"
-const tableUsers = {
-  TableUsers: {
-    Type: 'AWS::DynamoDB::Table',
-    DeletionPolicy: 'Retain',
-    Properties: {
-      AttributeDefinitions: [{
-        AttributeName: 'UserId',
-        AttributeType: 'S'
-      }],
-      KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }],
-      ProvisionedThroughput: {
-        ReadCapacityUnits: '1',
-        WriteCapacityUnits: '1'
-      },
-      StreamSpecification: { StreamViewType: 'NEW_IMAGE' } // include the StreamSpecification property!
-    }
-  }
-};
+const tableUsers = dynamoDBTable({
+  tableLogicalName: 'TableUsers',
+  primaryKeyName: 'UserId',
+  enableStream: true // !important!
+});
 
 // an S3 Bucket that's used to store item snapshots,
 // it's suggested to enable Versioning, as below:
-const bucketBackups = {
-  DynamoBackupsBucket: {
-    Type: 'AWS::S3::Bucket',
-    Properties: {
-      VersioningConfiguration: {
-        Status: 'Enabled'
-      }
-    }
-  }
-};
+const bucketBackups = s3BucketVersioning({
+  bucketLogicalName: 'DynamoBackupsBucket'
+});
 
 // this function will return the appropriate Resources
 // including Lambda::Function, IAM::Role and Lambda::EventSourceMapping
 const backupResources = createDynamodbBackupTrigger({
-  tableLogicalName: 'TableUsers',
-  bucketLogicalName: 'DynamoBackupsBucket'
+  tableLogicalName: 'TableUsers', // existing DynamoDB Table __Logical__ Resource Id
+  bucketLogicalName: 'DynamoBackupsBucket' // existing S3 Bucket __Logical__ Resource Id
 });
+
+const resources = merge({}, tableUsers, bucketBackups, backupResources);
 
 export function processCFTemplate(template) {
   return merge(template, {
-    Resources: {
-      ...tableUsers,
-      ...bucketBackups,
-      ...backupResources
-    }
+    Resources: resources
   });
 }
 
 ```
+
+## Details
+
+* This snippet is not composable and its resources should not be further customized
+* both `tableLogicalName` and `bucketLogicalName` must reference Resources in the current `CloudFormation Template`; it's up to you to include the *snippets* to create those resources ([`dynamodb-table`](/dynamodb-table) and [`s3-bucket-versioning`](/s3-bucket-versioning))
+* The Lambda Function is automatically created and uploaded, as well as the required Permissions and IAM Roles. The following Resources will be included by this snippet: `AWS::IAM::Role`, `AWS::Lambda::EventSourceMapping`, `AWS::Lambda::Function`
+
+
+## Tests
+
+[dynamodb-backup.spec.js](/__tests__/dynamodb-backup.spec.js)
 
