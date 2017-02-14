@@ -11,7 +11,18 @@ Snippets are an easy way to add custom resources to a [dawson](https://github.co
 ## Usage
 
 For usage instructions see the README files in each folder.
-Snippets are composable and are designed to be merged using `lodash.merge` or any similar deep-merge function. Snippets provides Resources objects that you can attach to a dawson application using [processCFTemplate() or customTemplateFragment()](https://github.com/dawson-org/dawson-cli/blob/master/docs/README.md#6-working-with-the-template).
+
+Snippets are composable and are designed to be merged using `lodash.merge` or any similar deep-merge function. Snippets provides `Resources` objects that you can attach to a `dawson` application using [processCFTemplate() or customTemplateFragment()](https://github.com/dawson-org/dawson-cli/blob/master/docs/README.md#6-working-with-the-template).
+
+`dawson-snippets` is dependency-free; it should be used with the `dawson` package of the same version (major.minor).
+
+
+### Resource Names
+
+Many snippets will take one or many `logicalName` parameter(s). Each `*LogicalName` you provide must be **unique** in a whole `CloudFormation Template`.    
+Resources Physical Names will be created automatically by `CloudFormation`.
+Resources Physical (real) Names and ARNs should be accessed using `Ref`, `Fn::Sub`, `Fn::GetAtt` functions and shall never be hardcoded into your apps.
+
 
 ## License
 
