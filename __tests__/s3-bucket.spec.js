@@ -2,6 +2,7 @@ const test = require('ava');
 const merge = require('lodash/merge');
 
 const s3Bucket = require('../s3-bucket');
+const s3BucketVersioning = require('../s3-bucket-versioning');
 const s3BucketCors = require('../s3-bucket-cors');
 const s3BucketNotification = require('../s3-bucket-notification');
 const s3BucketPublicRead = require('../s3-bucket-public-read');
@@ -25,6 +26,38 @@ const SIMPLE_BUCKET = {
 test('AdminBucket', t => {
   t.deepEqual(SIMPLE_BUCKET, {
     Resources: s3Bucket({ bucketLogicalName: 'AdminBucket' }),
+    Outputs: {
+      AdminBucket: {
+        Value: { Ref: 'AdminBucket' }
+      }
+    }
+  });
+});
+/* *** */
+
+/* s3BucketVersioning */
+const VERSIONED_BUCKET = {
+  Resources: {
+    AdminBucket: {
+      Type: 'AWS::S3::Bucket',
+      Properties: {
+        VersioningConfiguration: {
+          Status: 'Enabled'
+        }
+      },
+      DeletionPolicy: 'Retain'
+    }
+  },
+  Outputs: {
+    AdminBucket: {
+      Value: { Ref: 'AdminBucket' }
+    }
+  }
+};
+
+test('AdminBucket', t => {
+  t.deepEqual(VERSIONED_BUCKET, {
+    Resources: s3BucketVersioning({ bucketLogicalName: 'AdminBucket' }),
     Outputs: {
       AdminBucket: {
         Value: { Ref: 'AdminBucket' }
