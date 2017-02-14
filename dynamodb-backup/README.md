@@ -32,7 +32,7 @@ const bucketBackups = s3BucketVersioning({
 
 // this function will return the appropriate Resources
 // including Lambda::Function, IAM::Role and Lambda::EventSourceMapping
-const backupResources = createDynamodbBackupTrigger({
+const backupResources = createBackupTrigger({
   tableLogicalName: 'TableUsers', // existing DynamoDB Table __Logical__ Resource Id
   bucketLogicalName: 'DynamoBackupsBucket' // existing S3 Bucket __Logical__ Resource Id
 });
