@@ -2,9 +2,38 @@
 const test = require('ava');
 const merge = require('lodash/merge');
 
+const s3Bucket = require('../s3-bucket');
 const s3BucketCors = require('../s3-bucket-cors');
 const s3BucketNotification = require('../s3-bucket-notification');
 const s3BucketPublicRead = require('../s3-bucket-public-read');
+
+/* s3BucketCors */
+const SIMPLE_BUCKET = {
+  Resources: {
+    AdminBucket: {
+      Type: 'AWS::S3::Bucket',
+      Properties: {},
+      DeletionPolicy: 'Retain'
+    }
+  },
+  Outputs: {
+    AdminBucket: {
+      Value: { Ref: 'AdminBucket' }
+    }
+  }
+};
+
+test('AdminBucket', t => {
+  t.deepEqual(SIMPLE_BUCKET, {
+    Resources: s3Bucket({ bucketLogicalName: 'AdminBucket' }),
+    Outputs: {
+      AdminBucket: {
+        Value: { Ref: 'AdminBucket' }
+      }
+    }
+  });
+});
+/* *** */
 
 /* s3BucketCors */
 const USER_BUCKET = {
