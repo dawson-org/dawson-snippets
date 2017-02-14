@@ -11,7 +11,7 @@ Creates an S3 Bucket with a basic CORS Configuration. The Physical Bucket Name i
 ```js
 // example api.js
 
-import s3Bucket from 'dawson-snippets/s3-bucket';
+import s3BucketCors from 'dawson-snippets/s3-bucket-cors';
 import merge from 'lodash/merge';
 
 const userBucket = s3BucketCors({
