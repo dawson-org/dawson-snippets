@@ -2,45 +2,25 @@ import fs from 'fs';
 import test from 'ava';
 
 import createDynamodbBackupTrigger from '../dynamodb-backup';
+import s3BucketVersioning from '../s3-bucket-versioning';
+import dynamoDBTable from '../dynamodb-table';
 
 import merge from 'lodash/merge';
 
 // an _example_ DynamoDB Table,
 // make sure to include the StreamSpecification attribute
 // otherwise you get a CloudFormation error: "Attribute: StreamArn was not found for resource: XXX"
-const tableUsers = {
-  TableUsers: {
-    Type: 'AWS::DynamoDB::Table',
-    DeletionPolicy: 'Retain',
-    Properties: {
-      AttributeDefinitions: [
-        {
-          AttributeName: 'UserId',
-          AttributeType: 'S'
-        }
-      ],
-      KeySchema: [{ AttributeName: 'UserId', KeyType: 'HASH' }],
-      ProvisionedThroughput: {
-        ReadCapacityUnits: '1',
-        WriteCapacityUnits: '1'
-      },
-      StreamSpecification: { StreamViewType: 'NEW_IMAGE' } // include the StreamSpecification property!
-    }
-  }
-};
+const tableUsers = dynamoDBTable({
+  tableLogicalName: 'TableUsers',
+  primaryKeyName: 'UserId',
+  enableStream: true
+});
 
 // an S3 Bucket that's used to store item snapshots,
 // it's suggested to enable Versioning, as below:
-const bucketBackups = {
-  DynamoBackupsBucket: {
-    Type: 'AWS::S3::Bucket',
-    Properties: {
-      VersioningConfiguration: {
-        Status: 'Enabled'
-      }
-    }
-  }
-};
+const bucketBackups = s3BucketVersioning({
+  bucketLogicalName: 'DynamoBackupsBucket'
+});
 
 // this function will return the appropriate Resources
 // including Lambda::Function, IAM::Role and Lambda::EventSourceMapping
@@ -49,10 +29,8 @@ const backupResources = createDynamodbBackupTrigger({
   bucketLogicalName: 'DynamoBackupsBucket'
 });
 
-const resources = merge({}, tableUsers, bucketBackups, backupResources);
-
-const result = {
-  Resources: resources,
+const actual = {
+  Resources: merge({}, tableUsers, bucketBackups, backupResources),
   Outputs: {}
 };
 
@@ -89,7 +67,8 @@ const expected = {
         VersioningConfiguration: {
           Status: 'Enabled'
         }
-      }
+      },
+      DeletionPolicy: 'Retain'
     },
     DynamoDBSnapshotTableUsersEventSourceMapping: {
       Type: 'AWS::Lambda::EventSourceMapping',
@@ -175,5 +154,5 @@ const expected = {
 };
 
 test.test('dynamodb-backup', t => {
-  t.deepEqual(result, expected);
+  t.deepEqual(actual, expected);
 });
