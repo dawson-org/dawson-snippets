@@ -32,10 +32,10 @@ module.exports = params => {
   };
 };
 
-// You can pass 'mergeWithCustomizer'
+// You can pass 'mergeCustomizer'
 // as the last param to lodash.mergeWith
 // so that arrays will be concatenated
-module.exports.mergeWithCustomizer = (objValue, srcValue) => {
+module.exports.mergeCustomizer = (objValue, srcValue) => {
   if (Array.isArray(objValue)) {
     return objValue.concat(srcValue);
   }

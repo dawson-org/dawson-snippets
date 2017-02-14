@@ -17,13 +17,19 @@
   },
   "homepage": "https://github.com/dawson-org/dawson-snippets#readme",
   "eslintConfig": {
-    "extends": ["semistandard"],
+    "extends": [
+      "semistandard"
+    ],
     "rules": {
-      "object-curly-spacing": [2, "always"]
+      "object-curly-spacing": [
+        2,
+        "always"
+      ]
     }
   },
   "devDependencies": {
-    "ava": "^0.18.1"
+    "ava": "^0.18.1",
+    "lodash": "^4.17.4"
   },
   "engines": {
     "node": "4.3"
