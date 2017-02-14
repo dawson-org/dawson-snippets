@@ -22,7 +22,7 @@ import xxxSnippetFunction from 'dawson-snippets/xxx-snippet-function';
 const snippetResources = xxxSnippetFunction({ params });
 const cloudformationTemplate = {
   Resources: {
-    snippetResources,
+    ...snippetResources,
     /* ... */
   }
   Outputs: { /* ... */ },
