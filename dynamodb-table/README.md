@@ -35,7 +35,7 @@ export function processCFTemplate(template) {
 
 ## Details
 
-* This snippet is composable with all the others `s3-dynamodb-*` snippets
+* This snippet is composable with all the others `dynamodb-*` snippets
 * If `enableStream` is `true` a stream is enabled for this Table (`StreamViewType = 'NEW_IMAGE'`)
 
 
