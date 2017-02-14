@@ -1,6 +1,6 @@
 {
   "name": "dawson-snippets",
-  "version": "0.0.4",
+  "version": "0.17.0",
   "description": "Snippets for CloudFormation templates",
   "repository": {
     "type": "git",
