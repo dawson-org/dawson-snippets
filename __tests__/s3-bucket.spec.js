@@ -1,4 +1,3 @@
-
 const test = require('ava');
 const merge = require('lodash/merge');
 

@@ -26,9 +26,7 @@ const lambdaRoleTemplate = (tableLogicalName, bucketLogicalName) => ({
             {
               Effect: 'Allow',
               Action: ['s3:PutObject'],
-              Resource: [
-                { 'Fn::Sub': `arn:aws:s3:::\${${bucketLogicalName}}/*` }
-              ]
+              Resource: [{ 'Fn::Sub': `arn:aws:s3:::\${${bucketLogicalName}}/*` }]
             },
             {
               Effect: 'Allow',
@@ -65,7 +63,10 @@ module.exports = function createDynamodbBackupTrigger (params) {
         StartingPosition: 'TRIM_HORIZON'
       }
     },
-    [`${lambdaNameTemplate(tableLogicalName)}Role`]: lambdaRoleTemplate(tableLogicalName, bucketLogicalName),
+    [`${lambdaNameTemplate(tableLogicalName)}Role`]: lambdaRoleTemplate(
+      tableLogicalName,
+      bucketLogicalName
+    ),
     [lambdaName]: {
       Type: 'AWS::Lambda::Function',
       Properties: {
@@ -124,4 +125,4 @@ module.exports = function createDynamodbBackupTrigger (params) {
       }
     }
   };
-}
+};

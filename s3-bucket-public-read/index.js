@@ -1,5 +1,4 @@
-const makePolicyLogicalName = bucketLogicalName =>
-  `${bucketLogicalName}Policy`;
+const makePolicyLogicalName = bucketLogicalName => `${bucketLogicalName}Policy`;
 
 module.exports = params => {
   const bucketLogicalName = params.bucketLogicalName;

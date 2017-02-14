@@ -7,7 +7,8 @@
     "url": "git+https://github.com/dawson-org/dawson-snippets.git"
   },
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "format": "prettier-eslint --write **/*.js"
   },
   "author": "Simone Lusenti <simone@plasticpanda.com>",
   "license": "MIT",
@@ -15,6 +16,12 @@
     "url": "https://github.com/dawson-org/dawson-snippets/issues"
   },
   "homepage": "https://github.com/dawson-org/dawson-snippets#readme",
+  "eslintConfig": {
+    "extends": ["semistandard"],
+    "rules": {
+      "object-curly-spacing": [2, "always"]
+    }
+  },
   "devDependencies": {
     "ava": "^0.18.1"
   },
