@@ -19,10 +19,9 @@ Snippets are composable and are designed to be merged using `lodash.merge` or an
 
 ### Resource Names
 
-Many snippets will take a `logicalName` as a parameter. Each `*LogicalName` you provide must be *unique* in a whole CloudFormation Template.
+Many snippets will take one or many `logicalName` parameter(s). Each `*LogicalName` you provide must be **unique** in a whole `CloudFormation Template`.    
 Resources Physical Names will be created automatically by `CloudFormation`.
 Resources Physical (real) Names and ARNs should be accessed using `Ref`, `Fn::Sub`, `Fn::GetAtt` functions and shall never be hardcoded into your apps.
-
 
 
 ## License
