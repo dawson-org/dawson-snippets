@@ -1,5 +1,5 @@
 
-s3-bucket-cors
+s3-bucket-public-read
 ===
 
 Creates an S3 Bucket with a basic CORS Configuration. The Physical Bucket Name is automatically generated.  
