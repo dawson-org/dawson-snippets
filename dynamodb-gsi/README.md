@@ -3,7 +3,7 @@ dynamodb-gsi
 ===
 
 Adds a Global Secondary Index (with an String Partition/Hash Key) to a DynamoDB Table.
-The Index Name equals `<lowercasedattributename>-global-index`.  
+The Index Name equals `<lowercased-gsiKeyName>-global-index`.  
 
 This snippet **does not define a Table**. Use [`dynamodb-table`](/dynamodb-table) and then merge one or more of 
 this snippet to add [up to 5](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html) Global Secondary Indexes.
