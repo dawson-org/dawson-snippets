@@ -1,14 +1,12 @@
 
-s3-bucket
+s3-bucket-cors
 ===
 
-Creates an S3 Bucket. The Physical Bucket name is automatically generated.  
-You can refer to this resource using `{ Ref: '<bucketLogicalName>' }`.  
-This snippet is composable with all the others `s3-bucket-*` snippets.
+Creates an S3 Bucket with a basic CORS Configuration. The Physical Bucket Name is automatically generated.  
 
 ![](https://nodei.co/npm/dawson-snippets.png?mini=true)
 
-### Usage
+## Usage
 
 ```js
 // example api.js
@@ -16,7 +14,7 @@ This snippet is composable with all the others `s3-bucket-*` snippets.
 import s3Bucket from 'dawson-snippets/s3-bucket';
 import merge from 'lodash/merge';
 
-const userBucket = s3BucketCors({
+const userBucket = s3Bucket({
   bucketLogicalName: 'UserBucket'
 });
 
@@ -29,6 +27,15 @@ export function processCFTemplate(template) {
 }
 ```
 
-### Tests
+*CloudFormation's Physical Resource Id:* `{ Ref: '<bucketLogicalName>' }`  
+*AWS ARN:* ```{ 'Fn::Sub': `arn:aws:s3:::\${<bucketLogicalName>}` }```
+
+
+## Details
+
+* This snippet is composable with all the others `s3-bucket-*` snippets
+
+
+## Tests
 
 [s3-bucket.spec.js](__tests__/s3-bucket.spec.js)
