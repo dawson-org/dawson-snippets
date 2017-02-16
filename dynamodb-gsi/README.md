@@ -28,13 +28,13 @@ const usersTable = dynamoDBTable({
 const emailGSI = dynamoDBGSI({
   tableLogicalName: 'TableUsers',
   gsiKeyName: 'Email',
-  projectedAttributes: ['Password', 'SessionToken']
+  projectedAttributes: ['Password', 'SessionToken'] // optional, defaults to undefined
 });
 
 const sessionTokenGSI = dynamoDBGSI({
   tableLogicalName: 'TableUsers',
   gsiKeyName: 'SessionToken',
-  projectedAttributes: ['UserId']
+  projectedAttributes: ['UserId'] // optional, defaults to undefined
 });
 
 const usersTableResources = mergeWith(
@@ -59,6 +59,7 @@ export function processCFTemplate(template) {
 ## Details
 
 * This snippet is composable with all the others `dynamodb-*` snippets
+* If `projectedAttributes` is specified, then *only the specified table attributes are projected into the index*; else *all of the table attributes are projected into the index* ([AWS Documentation for INCLUDE and ALL](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dynamodb-projectionobject.html)).  
 * `lodash.merge` does not `.concat` Arrays, so you need to use `lodash.mergeWith` to add many GSIs without overwriting previous ones or overriding Primary Key's Schema. `mergeCustomizer` is a shortcut [customizer function](https://lodash.com/docs/4.17.4#mergeWith).
 * This snippet supports Global Secondary Indexes with a Partition (Hash) Key of type String
 * Provisoned Throughput is set to 1 for both Read and Write Capacity
