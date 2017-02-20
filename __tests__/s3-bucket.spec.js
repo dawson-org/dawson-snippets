@@ -80,6 +80,7 @@ const USER_BUCKET = {
               AllowedHeaders: [
                 'authorization',
                 'origin',
+                'if-none-match',
                 'content-md5',
                 'content-type',
                 'x-amz-date',
@@ -128,6 +129,7 @@ const COMPANY_BUCKET = {
               AllowedHeaders: [
                 'authorization',
                 'origin',
+                'if-none-match',
                 'content-md5',
                 'content-type',
                 'x-amz-date',
@@ -202,6 +204,7 @@ const COMPANY_SHOWCASE = {
               AllowedHeaders: [
                 'authorization',
                 'origin',
+                'if-none-match',
                 'content-md5',
                 'content-type',
                 'x-amz-date',

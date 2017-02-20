@@ -11,6 +11,7 @@ module.exports = params => {
               AllowedHeaders: [
                 'authorization',
                 'origin',
+                'if-none-match',
                 'content-md5',
                 'content-type',
                 'x-amz-date',
