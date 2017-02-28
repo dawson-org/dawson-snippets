@@ -16,20 +16,6 @@ Snippets are an easy way to add custom resources to a [dawson](https://github.co
 
 Snippets are composable and are designed to be merged using `lodash.merge` or any similar deep-merge function. Snippets provides `Resources` objects that you can attach to a `dawson` application using [processCFTemplate() or customTemplateFragment()](https://github.com/dawson-org/dawson-cli/blob/master/docs/README.md#6-working-with-the-template).
 
-#### tl;dr
-```js
-import xxxSnippetFunction from 'dawson-snippets/xxx-snippet-function'; // snippet documentation in each folder
-const snippetResources = xxxSnippetFunction({ params });
-const cloudformationTemplate = {
-  Resources: {
-    ...snippetResources,
-    /* ... */
-  }
-  Outputs: { /* ... */ },
-  /* ... */
-};
-```
-
 
 #### Resource Names
 
