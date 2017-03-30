@@ -28,10 +28,16 @@ export function processCFTemplate(template) {
 }
 ```
 
-*CloudFormation's Physical Resource Id:* `{ Ref: '<tableLogicalName>' }`  
-*AWS DynamoDB Table ARN:* ```{ 'Fn::Sub': `arn:aws:dynamodb:\${AWS::Region}:\${AWS::AccountId}:table/\${<bucketLogicalName>}` }```  
-*AWS DynamoDB Table Index ARN:* ```{ 'Fn::Sub': `arn:aws:dynamodb:\${AWS::Region}:\${AWS::AccountId}:table/\${<bucketLogicalName>}/<attributeName>-global-index` }```  
-*AWS DynamoDB Stream ARN:* ```{ 'Fn::Sub': `\${<bucketLogicalName>.StreamArn}` }```
+### Referencing this Resource
+
+| Name | Example |
+| ---- | ------- |
+| CloudFormation's Physical Resource Id | `{ Ref: '<tableLogicalName>' }` |
+| AWS DynamoDB Table ARN | ```{ 'Fn::Sub': `arn:aws:dynamodb:\${AWS::Region}:\${AWS::AccountId}:table/\${<tableLogicalName>}` }``` |
+| AWS DynamoDB Table Index ARN: | ```{ 'Fn::Sub': `arn:aws:dynamodb:\${AWS::Region}:\${AWS::AccountId}:table/\${<tableLogicalName>}/<attributeName>-global-index` }``` |
+| AWS DynamoDB All Table Indexes ARN: | ```{ 'Fn::Sub': `arn:aws:dynamodb:\${AWS::Region}:\${AWS::AccountId}:table/\${<tableLogicalName>}/*` }``` |
+| AWS DynamoDB Stream ARN: | ```{ 'Fn::Sub': `\${<tableLogicalName>.StreamArn}` }``` |
+
 
 ## Details
 
